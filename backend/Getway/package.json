@@ -1,0 +1,19 @@
+{
+  "name": "getway",
+  "version": "1.0.0",
+  "description": "this is using for loadbalancer",
+  "license": "ISC",
+  "author": "adarsh",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-http-proxy": "^2.1.2",
+    "morgan": "^1.12.0",
+    "pino": "^10.3.1"
+  }
+}
