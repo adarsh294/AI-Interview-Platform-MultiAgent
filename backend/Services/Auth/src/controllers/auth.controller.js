@@ -3,7 +3,26 @@ import { redisClient } from "../redis.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import {getAuth} from "../config/firebase.js";
+import {app} from "../config/firebase.js";
 
+
+export const googleauth=async(req,res,next)=>{
+    try {
+        const {token}=req.body;
+        const decodedToken = await getAuth(app).verifyIdToken(token);
+        const {name,email,picture,uid}=decodedToken;
+        const find= await usermodel.findOne({uid:uid});
+        if(find){
+            return res.status(200).json({message:"user already exist",data:find});
+        };
+        const data=await usermodel.create({firstnamebaseUid:uid,name,email});
+
+        res.status(200).json({message:"user created successfully",data});
+    } catch (error) {
+     next(error);   
+    }
+}
 
 export const register=async(req,res,next)=>{
     try {      
@@ -77,6 +96,10 @@ export const update= async (req,res,next)=>{
         const findone=await usermodel.findOne({$or:[{username},{email}]});
         if (!findone) {
             return res.status(400).json({message:"invalid username or email"});
+        };
+        const findloggedin=await redisClient.get(`blacklist:${req.token}`);
+        if(findloggedin){
+            return res.status(401).json({message:"token revoked"});
         };
          const tokenHash = await crypto.createHash("sha256").update(req.token).digest("hex");
         const session = await sessionmodel.findOne({userId:req.user, refreshtoken:tokenHash,revoke:false});

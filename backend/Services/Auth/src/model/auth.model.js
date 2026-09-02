@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
+import { type } from "os";
   
 const Userschema= new mongoose.Schema({
+    firstnamebaseUid:{
+        type:String,
+        required:[true],
+        trim:true
+    },
    name:{
         type:String,
         required:[true,'username is required'],
@@ -18,6 +24,11 @@ const Userschema= new mongoose.Schema({
         type:String,
         required:[true,'password is required'],
         trim:true
+    },
+    interviewcoins:{
+        type:Number,
+        default:150
+    
     }
 }, {
     timestamps: true

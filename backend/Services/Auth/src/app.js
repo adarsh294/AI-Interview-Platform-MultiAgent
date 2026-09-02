@@ -3,17 +3,18 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import morgan from "morgan";
+import { connectDB } from "./config/db.js";
 import { router } from "./routes/auth.router.js";
 import { err } from "./middleware/err.middleware.js";
 const app =express();
-
+connectDB();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(helmet());
 app.use(compression());
 app.use(cookieParser());
 app.use(morgan("dev"));
-
 app.use("/",router);
+
 app.use(err);
 export default app;
