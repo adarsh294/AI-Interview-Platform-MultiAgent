@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { registerValidation } from "../validator/register.validate.js";
 import { ratelimit } from "../middleware/ratelimmitter.js";
-import { register ,login,logout,logoutAll,update,getme} from "../controllers/auth.controller.js";
+import { register ,login,logout,logoutAll,update,getme,googleauth} from "../controllers/auth.controller.js";
 import { auth } from "../middleware/auth.middleware.js";
 import { userauth } from "../middleware/user.middleware.js";
 
 export const router =Router();
+router.post("/googleauth",googleauth);
 /*
 * @route POST  api/v1/auth/register
 * @description register new user ,expect username,email,and password in request

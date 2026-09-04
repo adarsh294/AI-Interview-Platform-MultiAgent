@@ -4,7 +4,7 @@ import { type } from "os";
 const Userschema= new mongoose.Schema({
     firstnamebaseUid:{
         type:String,
-        required:[true],
+        required:[true,'firstnamebaseUid is required'],
         trim:true
     },
    name:{
@@ -20,17 +20,12 @@ const Userschema= new mongoose.Schema({
         lowercase: true,
         trim: true
     },
-    password:{
-        type:String,
-        required:[true,'password is required'],
-        trim:true
-    },
-    interviewcoins:{
+interviewcoins:{
         type:Number,
         default:150
     
     }
-}, {
+},{
     timestamps: true
 }
 );
